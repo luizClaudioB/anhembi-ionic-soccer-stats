@@ -1,17 +1,46 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
+        <ion-avatar style="width: 100px; height: 100px; margin-left: 35%; margin-bottom: 5px">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Palmeiras_logo.svg/200px-Palmeiras_logo.svg.png">
+        </ion-avatar>
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
-</ion-content>
+  <ng-container *ngIf="supportedTeamGame">
+    
+      <ion-card>
+        <ion-card-header>
+          <ion-row style="align-items: center;">
+            <ion-card-subtitle style="margin-right: 10px">Próxima partida -</ion-card-subtitle>
+            <ion-card-subtitle>{{ supportedTeamGame[12]?.round }}</ion-card-subtitle>
+          </ion-row>
+        </ion-card-header>
+      
+        <ion-card-content>
+          <ion-label>
+            <ion-row style="align-items: center;">
+              <ion-avatar style="margin-right: 10px">
+                <img [src]="teamsImg[0].img" />
+              </ion-avatar>
+              <h3 style="margin-right: 10px">x</h3>
+              <ion-avatar style="margin-right: 10px">
+                <img [src]="teamsImg1[0].img" />
+              </ion-avatar>
+                <p>{{ supportedTeamGame[12]?.date }}</p>
+            </ion-row>
+          </ion-label>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-content>
+      <ion-card style="margin-bottom: 60px;">
+        <ion-card-content *ngFor="let game of supportedTeamGame">
+          <h2>{{ game?.round }}</h2>
+          <h3>{{ game?.team1 }} x {{ game?.team2 }}</h3>
+          <p>{{ game?.date }}</p>
+        </ion-card-content>
+      </ion-card>
+    </ion-content>
+  </ng-container>
+
