@@ -11,9 +11,10 @@ import { MatchesModel } from '../models/matches.model'
 export class Tab1Page implements OnInit {
 
   isLoading: boolean = false;
-  jogosBrasileirao: MatchesModel;
-  jogosBrasileiraoFiltrados: any;
+  matches: MatchesModel;
+  filteredMatches: any;
   filtrarJogos: boolean = false;
+  country: string = 'brasil';
 
   constructor(
     private footballLiveService: FootballLiveService,
@@ -24,32 +25,31 @@ export class Tab1Page implements OnInit {
   }
 
   async initializeData(){
-    await this.getChampionshipData('brasil');
+    await this.getChampionshipData(this.country);
   }
 
   public async getChampionshipData(country: string) {
     this.isLoading = true;
     const result: MatchesModel = await this.footballLiveService.getChampionship(country)
-        this.jogosBrasileirao = result;
+        this.matches = result;
         this.getPastRounds();
         this.getEachRoundSeparated();
         this.isLoading = false;
      
-    return this.jogosBrasileirao;
+    return this.matches;
   }
 
   getPastRounds(){
-    this.jogosBrasileiraoFiltrados = this.jogosBrasileirao.matches.filter((placar) => placar?.score?.ft.length > 0);
+    this.filteredMatches = this.matches.matches.filter((placar) => placar?.score?.ft.length > 0);
 
-    return this.jogosBrasileiraoFiltrados;
+    return this.filteredMatches;
   }
 
   getEachRoundSeparated(){
     let rodadasSeparadas: Object;
-    rodadasSeparadas = this.jogosBrasileirao.matches.reduce((h, match) => Object.assign(h, { [match.round]:( h[match.round] || [] )
+    rodadasSeparadas = this.matches.matches.reduce((h, match) => Object.assign(h, { [match.round]:( h[match.round] || [] )
       .concat({date: match.date, score: match.score, team1: match.team1, team2: match.team2}) }), {});
 
     return rodadasSeparadas;
   }
-
 }
