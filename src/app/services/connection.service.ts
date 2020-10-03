@@ -23,15 +23,15 @@ export class ConnectionService {
     if (error.error instanceof ErrorEvent) {
       errorMessage = error.error.message;
     } else {
-      errorMessage = `Código do erro: ${error.status}, ` + `menssagem: ${error.message}`;
+      errorMessage = `Código do erro: ${error.status}, ` + `mensagem: ${error.message}`;
     }
     console.log(errorMessage);
     return throwError(errorMessage);
   };
 
-  executeGet(endPont:string): Observable<any> {
+  executeGet(endPoint:string): Observable<any> {
     console.log(TAG,"executeGet");
-    return this.httpClient.get<any>(endPont)
+    return this.httpClient.get<any>(endPoint)
       .pipe(
         retry(2),
         catchError(this.handleError))
