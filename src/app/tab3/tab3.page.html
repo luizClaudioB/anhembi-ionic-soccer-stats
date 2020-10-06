@@ -1,13 +1,59 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Perfil
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-list-header>
+  <div style="width: 95%; display: flex; justify-content: center;">
+  <h4>Tabela do Campeonato</h4>
+  </div>
+</ion-list-header>
 
-<ion-content [fullscreen]="true">
+<ion-item>
+  <ion-label>Campeonato</ion-label>
+  <ion-select id="country" (ionChange)="initializeData($event.detail.value)" value="brasil">
+    <ion-select-option value="brasil">Brasileirão</ion-select-option>
+    <ion-select-option value="inglaterra">Premier League</ion-select-option>
+  </ion-select>
+</ion-item>
 
-
+<ion-content *ngIf="standings != null">
+  <ion-grid style="padding: 15px">
+    <ion-row>
+      <ion-col size="4.5">
+       Clube
+      </ion-col>
+      <ion-col size="1.5">
+       Pts
+      </ion-col>
+      <ion-col size="1.5">
+       PJ
+      </ion-col>
+      <ion-col size="1.5">
+       V
+      </ion-col>
+      <ion-col size="1.5">
+        E
+      </ion-col>
+      <ion-col size="1.5">
+        D
+      </ion-col>
+    </ion-row>
   
+    <ion-row *ngFor="let team of standings">
+      <ion-col style="text-overflow: ellipsis;" size="4.5">
+        {{ team.team }}
+      </ion-col>
+      <ion-col size="1.5">
+        {{ team.pontos }}
+      </ion-col>
+      <ion-col size="1.5">
+        {{ team.jogos }}
+      </ion-col>
+      <ion-col size="1.5">
+        {{ team.vitorias }}
+      </ion-col>
+      <ion-col size="1.5">
+        {{ team.empates }}
+      </ion-col>
+      <ion-col size="1.5">
+        {{ team.derrotas }}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

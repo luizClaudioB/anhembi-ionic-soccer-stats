@@ -1,51 +1,41 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title size="small">
-      {{ matches?.name }}
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-list-header>
+  <div style="width: 95%; display: flex; justify-content: center;">
+  <h4>Partidas do Campeonato</h4>
+  </div>
+</ion-list-header>
 
-    <div style="display: flex; flex-direction: column;">
-      <ion-list-header>
-        <h4>Todos os Jogos</h4>
-      </ion-list-header>
-      <ion-item>
-      <ion-toggle [(ngModel)]="filtrarJogos" slot="start">Partidas disputadas</ion-toggle>
-      <ion-button (click)="getChampionshipData('inglaterra')" slot="start"> Premier League </ion-button>
-      <ion-button (click)="getChampionshipData('brasil')" slot="start"> Brasileirão </ion-button>
-      </ion-item>
-    </div>
+    <ion-item>
+      <ion-label>Campeonato</ion-label>
+      <ion-select id="country" (ionChange)="getChampionshipData($event.detail.value); country = $event.detail.value" 
+        value="brasil">
+        <ion-select-option value="brasil">Brasileirão</ion-select-option>
+        <ion-select-option value="inglaterra">Premier League</ion-select-option>
+      </ion-select>
+    </ion-item>
 
     <ion-content>
-    <ion-spinner *ngIf="isLoading === true; else showMatches"></ion-spinner>
-    <ion-list style="padding-bottom: 45px;">
+    <div *ngIf="isLoading === true; else showMatches" style="display: flex; align-items: center; height: 30em; justify-content: center;">
+    <ion-spinner></ion-spinner>
+    </div>
     <ng-template #showMatches>
-      <section *ngIf="filtrarJogos === false; else jogosFiltrados" >
-        <ion-item *ngFor="let match of matches?.matches">
-          <ion-avatar slot="start">
-            <img src="https://logodownload.org/wp-content/uploads/2018/10/campeonato-brasileiro-logo-brasileirao-logo-2.png">
-          </ion-avatar>
-          <ion-label>
-            <h2>{{ match?.round }}</h2>
-            <h3>{{ match?.team1 }} x {{ match?.team2 }}</h3>
-            <p>{{ match?.score?.ft[0]}} - {{ match?.score?.ft[1] }}</p>
-          </ion-label>
-        </ion-item>
-      </section>
-
-      <ng-template #jogosFiltrados>
-        <ion-item *ngFor="let filteredMatch of filteredMatches">
-          <ion-avatar slot="start">
-            <img src="https://logodownload.org/wp-content/uploads/2018/10/campeonato-brasileiro-logo-brasileirao-logo-2.png">
-          </ion-avatar>
-          <ion-label>
-            <h2>{{ filteredMatch?.round }}</h2>
-            <h3>{{ filteredMatch?.team1 }} x {{ filteredMatch?.team2 }}</h3>
-            <p>{{ filteredMatch?.score?.ft[0]}} - {{ filteredMatch?.score?.ft[1] }}</p>
-          </ion-label>
-        </ion-item>
+      <ion-slides [options]="{ slidesPerView: 'auto', zoom: false, grabCursor: true }">
+        <ion-slide *ngFor="let round of eachRound; let i = index" style="width: 100%;">
+          <ion-col>
+            Rodada {{i + 1}}
+            <ion-card>
+              <ion-card-content *ngFor="let r of round">
+                <ion-row style="justify-content: center; align-items: center;">
+                    <img [src]="r?.teamImg1" style="margin-right: 10px; height: 70px; width: 60px" />
+                <h2 *ngIf="r.score; else noScore" bold style="margin: 3em; color: green">{{ r?.score?.ft[0] }} x {{ r?.score?.ft[1] }}</h2>
+                <ng-template #noScore>
+                  <h2 style="margin: 3em; color: green">- x -</h2>
+                </ng-template>
+                  <img [src]="r?.teamImg2" style="margin-left: 10px; height: 70px; width: 60px"/>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-slide>
+      </ion-slides>
       </ng-template>
-    </ng-template>
-    </ion-list>
     </ion-content>

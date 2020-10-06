@@ -14,6 +14,18 @@ const teamsImages: Array<teamsImg> = [
   {
   team: 'Ceára SC', 
   img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Cear%C3%A1_Sporting_Club_logo.svg/1200px-Cear%C3%A1_Sporting_Club_logo.svg.png'
+  },
+  {
+  team: 'Atlético GO',
+  img: "https://a1.espncdn.com/combiner/i?img=%2Fi%2Fteamlogos%2Fsoccer%2F500%2F10357.png"
+  },
+  {
+  team: 'Athletico PR',
+  img: "https://a.espncdn.com/i/teamlogos/soccer/500/3458.png",
+  },
+  {
+  team: 'EC Bahia',
+  img: "https://www.esporteclubebahia.com.br/wp-content/themes/2016/img/main/logo-bahia-max.png",
   }
 ];
 @Component({
