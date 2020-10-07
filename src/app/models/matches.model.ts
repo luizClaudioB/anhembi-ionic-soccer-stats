@@ -1,4 +1,5 @@
 export interface MatchesModel {
+    name?: string,
     matches?: [
         {
             date?: string,
