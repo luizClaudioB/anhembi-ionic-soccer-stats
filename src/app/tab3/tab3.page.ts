@@ -86,7 +86,8 @@ export class Tab3Page implements OnInit {
           playedGames = wins + draw + defeats;
       }
 
-      provisoryStandings.push({team: team, jogos: playedGames, pontos: points, vitorias: wins, empates: draw, derrotas: defeats});
+      provisoryStandings.push({team: this.clubs.clubs[i].clubName, jogos: playedGames,
+          pontos: points, vitorias: wins, empates: draw, derrotas: defeats});
       provisoryStandings.sort((a,b) => (a.pontos < b.pontos) ? 1 : ((b.pontos < a.pontos) ? -1 : 0)); 
     }
 
