@@ -1,0 +1,42 @@
+ion-input {
+    --placeholder-font-weight:600;
+}
+ion-content{
+    display:flex;
+    min-height: 100%;
+    position:relative;
+}
+.logo{
+    height: 14em;
+    width: 14em;
+    margin-top: 1em;
+}
+#content{
+    height: 100%;
+}
+
+// #grid-login{
+//     align-self:flex-start;
+// }
+
+#grid-login ion-row{
+    justify-content: center;
+}
+#sign-up{
+    margin-bottom: 2em;
+    width: 100%;
+    align-self: flex-end;
+}
+
+#input {
+    --background: #eaeaea;
+    color: #a7a7a7;
+    border-radius: 5px;
+    margin-bottom: 1.7em;
+    width: 18em;
+    font-size: 1em;
+}
+
+.btn{
+    width: 18em ;
+}
