@@ -1,0 +1,14 @@
+<div class="ion-padding">
+  <ion-text color="primary">
+    <h2 class="title">Crie uma conta e acompanhe o seu time do coração</h2>
+  </ion-text>
+
+  <form (ngSubmit)="register()" [formGroup]="userForm">
+    <ion-input appInput placeholder="Nome completo" formControlName="name"></ion-input>
+    <ion-input appInput placeholder="E-mail" formControlName="email"></ion-input>
+    <ion-input appInput placeholder="Senha" type="password" formControlName="password"></ion-input>
+    <ion-input appInput placeholder="Confirmação de senha" type="password" formControlName="confirmPassword">
+    </ion-input>
+    <ion-button expand="block" class="button" (click)="register()">Cadastre-se</ion-button>
+  </form>
+</div>

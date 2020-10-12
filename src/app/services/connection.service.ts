@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 
-const TAG = "ConnectionService";
+const TAG = 'ConnectionService';
 
 @Injectable({
   providedIn: 'root'
@@ -11,29 +11,29 @@ const TAG = "ConnectionService";
 export class ConnectionService {
 
   constructor(private httpClient: HttpClient) {
-    console.log(TAG,"constructor");
+    console.log(TAG, 'constructor');
   }
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  }
+  };
 
   handleError(error: HttpErrorResponse) {
-    console.log(TAG,"handleError");
+    console.log(TAG, 'handleError');
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
       errorMessage = error.error.message;
     } else {
-      errorMessage = `Código do erro: ${error.status}, ` + `mensagem: ${error.message}`;
+      errorMessage = `Código do erro: ${error.status}, mensagem: ${error.message}`;
     }
     console.log(errorMessage);
     return throwError(errorMessage);
-  };
+  }
 
-  executeGet(endPoint:string): Observable<any> {
-    console.log(TAG,"executeGet");
+  executeGet(endPoint: string): Observable<any> {
+    console.log(TAG, 'executeGet');
     return this.httpClient.get<any>(endPoint)
       .pipe(
         retry(2),
-        catchError(this.handleError))
+        catchError(this.handleError));
   }
 }
