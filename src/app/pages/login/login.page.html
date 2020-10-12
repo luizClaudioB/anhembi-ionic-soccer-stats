@@ -1,40 +1,30 @@
 <ion-content class="ion-padding">
-  <div style="display: flex; flex-wrap: wrap;" id="content">
-    <div style="width: 100%;max-height: 25%;">
-      <ion-row style="justify-content: center;">
-        <img class="logo" src="./../../../assets/Ativo 2.svg" alt="">
-      </ion-row>
-    </div>
-    <ion-grid id="grid-login">
-
-      <ion-row>
-        <!-- <ion-item>
-          <app-input></app-input>
-        </ion-item> -->
-        <ion-item id="input">
-          <ion-input placeholder="LOGIN"></ion-input>
-        </ion-item>
-      </ion-row>
-      <ion-row>
-        <!-- <ion-item>
-          <app-input></app-input>
-        </ion-item> -->
-        <ion-item id="input">
-          <ion-input placeholder="PASSWORD"></ion-input>
-        </ion-item>
-      </ion-row>
-      <ion-row>
-        <ion-button class="btn"><strong>LOGIN</strong></ion-button>
-      </ion-row>
-    </ion-grid>
-    <div id=sign-up>
-      <ion-row style="justify-content: center;">
-        <h4><strong>NEED AN ACCOUNT?</strong></h4>
-      </ion-row>
-      <ion-row style="justify-content: center;">
-        <ion-button class="btn"><strong>SIGN UP </strong></ion-button>
-      </ion-row>
-    </div>
-
+  <div id="content">
+      <ion-grid id="grid-login">
+        <ion-row>
+          <img class="logo" src="./../../../assets/Ativo 2.svg" alt="">
+        </ion-row>
+        <ion-row>
+          <ion-item id="input">
+            <ion-input value="username" (ionBlur)="logUsername(username)" [(ngModel)]="username" placeholder="LOGIN"></ion-input>
+          </ion-item>
+        </ion-row>
+        <ion-row>
+          <ion-item id="input">
+            <ion-input value="password" (ionBlur)="logPassword(password)" [(ngModel)]="password" placeholder="PASSWORD"></ion-input>
+          </ion-item>
+        </ion-row>
+        <ion-row>
+          <ion-button href="tabs/tab2"><strong>LOGIN</strong></ion-button>
+        </ion-row>
+      </ion-grid>
+      <div id=sign-up>
+        <ion-row>
+          <h4><strong>NÃO TEM UMA CONTA?</strong></h4>
+        </ion-row>
+        <ion-row>
+          <ion-button href="pages/register"><strong>CADASTRE-SE</strong></ion-button>
+        </ion-row>
+      </div>
   </div>
 </ion-content>
