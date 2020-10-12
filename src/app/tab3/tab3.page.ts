@@ -25,8 +25,10 @@ export class Tab3Page implements OnInit {
   }
 
   async initializeData(country: string){
+    this.isLoading = true;
     await this.getChampionshipData(country);
     await this.getClubsFromChampionship(country);
+    this.isLoading = false;
   }
 
   public async getChampionshipData(country: string) {
@@ -41,20 +43,14 @@ export class Tab3Page implements OnInit {
   public async getClubsFromChampionship(country: string) {
     const result: any = await this.footballLiveService.getClubsFromChampionship(country)
       this.clubs = result;
-      console.log('teste', this.clubs.clubs[0].name);
       this.getStandings();
     return this.clubs;
   }
 
   public getStandings() {
-    let allMatchesClub: any;
-    let team: any;
-    let provisoryStandings: any = [{}];
-    let wins: number = 0;
-    let defeats: number = 0;
-    let draw: number = 0;
-    let points: number = 0;
-    let playedGames: number = 0;
+    let allMatchesClub, team, provisoryStandings: any = [{}];
+    let wins: number = 0, defeats: number = 0, draw: number = 0, points: number = 0, playedGames: number = 0;
+    
     for(let i = 0; i < this.clubs.clubs.length; i++){
       wins = 0;
       defeats = 0;

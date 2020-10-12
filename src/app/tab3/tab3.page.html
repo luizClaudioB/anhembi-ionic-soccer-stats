@@ -12,53 +12,58 @@
   </ion-select>
 </ion-item>
 
-<ion-content *ngIf="standings != null">
-  <ion-card>
-  <ion-card-content>
-  <ion-grid style="color: black !important; font-weight: 100;
-     margin-left: -12px; margin-right: -18px; margin-top: -12px">
-    <ion-row>
-      <ion-col style="color: green" size="4.5">
-       Clube
-      </ion-col>
-      <ion-col style="color: green" size="1.5">
-       Pts
-      </ion-col>
-      <ion-col style="color: green" size="1.5">
-       PJ
-      </ion-col>
-      <ion-col style="color: green" size="1.5">
-       V
-      </ion-col>
-      <ion-col style="color: green" size="1.5">
-        E
-      </ion-col>
-      <ion-col style="color: green" size="1.5">
-        D
-      </ion-col>
-    </ion-row>
-  
-    <ion-row *ngFor="let team of standings">
-      <ion-col style="text-overflow: ellipsis;" size="4.5">
-        {{ team.team | slice:0:13 }}
-      </ion-col>
-      <ion-col size="1.5">
-        {{ team.pontos }}
-      </ion-col>
-      <ion-col size="1.5">
-        {{ team.jogos }}
-      </ion-col>
-      <ion-col size="1.5">
-        {{ team.vitorias }}
-      </ion-col>
-      <ion-col size="1.5">
-        {{ team.empates }}
-      </ion-col>
-      <ion-col size="1.5">
-        {{ team.derrotas }}
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-card-content>
-</ion-card>
-</ion-content>
+<div *ngIf="isLoading === true; else showStanding" style="display: flex; align-items: center; height: 30em; justify-content: center;">
+  <ion-spinner></ion-spinner>
+</div>
+<ng-template #showStanding>
+  <ion-content *ngIf="standings != null">
+    <ion-card>
+    <ion-card-content>
+    <ion-grid style="color: black !important; font-weight: 100;
+      margin-left: -12px; margin-right: -18px; margin-top: -12px">
+      <ion-row>
+        <ion-col style="color: green" size="4.5">
+        Clube
+        </ion-col>
+        <ion-col style="color: green" size="1.5">
+        Pts
+        </ion-col>
+        <ion-col style="color: green" size="1.5">
+        PJ
+        </ion-col>
+        <ion-col style="color: green" size="1.5">
+        V
+        </ion-col>
+        <ion-col style="color: green" size="1.5">
+          E
+        </ion-col>
+        <ion-col style="color: green" size="1.5">
+          D
+        </ion-col>
+      </ion-row>
+    
+      <ion-row *ngFor="let team of standings">
+        <ion-col style="text-overflow: ellipsis;" size="4.5">
+          {{ team.team | slice:0:13 }}
+        </ion-col>
+        <ion-col size="1.5">
+          {{ team.pontos }}
+        </ion-col>
+        <ion-col size="1.5">
+          {{ team.jogos }}
+        </ion-col>
+        <ion-col size="1.5">
+          {{ team.vitorias }}
+        </ion-col>
+        <ion-col size="1.5">
+          {{ team.empates }}
+        </ion-col>
+        <ion-col size="1.5">
+          {{ team.derrotas }}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+  </ion-card>
+  </ion-content>
+</ng-template>
