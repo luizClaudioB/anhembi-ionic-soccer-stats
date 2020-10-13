@@ -1,0 +1,37 @@
+
+#content{
+    height: 100%;
+    display: flex; 
+    flex-wrap: wrap;
+}
+
+.logo{
+    height: 14em;
+    width: 14em;
+    margin-top: 1em;
+}
+
+#sign-up{
+    margin-bottom: 2em;
+    width: 100%;
+    align-self: flex-end;
+}
+
+#input {
+    --background: #eaeaea;
+    color: #a7a7a7;
+    border-radius: 5px;
+    margin-bottom: 1.7em;
+    width: 18em;
+    font-size: 1em;
+
+}
+
+
+ion-row{
+    justify-content: center;
+}
+
+ion-button{
+    width: 18em ;
+}

@@ -1,0 +1,33 @@
+<ion-content class="ion-padding">
+  <div id="content">
+    <ion-grid id="grid-login">
+      <ion-row>
+        <img class="logo" src="./../../../assets/Ativo 2.svg" alt="">
+      </ion-row>
+      <ion-row>
+        <ion-item id="input">
+          <ion-input value="username" (ionBlur)="logUsername(username)" [(ngModel)]="username" placeholder="Usuário">
+          </ion-input>
+        </ion-item>
+      </ion-row>
+      <ion-row>
+        <ion-item id="input">
+          <ion-input value="password" (ionBlur)="logPassword(password)" type="password" [(ngModel)]="password" placeholder="Senha">
+          </ion-input>
+        </ion-item>
+      </ion-row>
+      <ion-row>
+        <ion-button href="tabs/tab2">ENTRAR</ion-button>
+      </ion-row>
+    </ion-grid>
+
+    <div id=sign-up>
+      <ion-row>
+        <h4>Não tem uma conta?</h4>
+      </ion-row>
+      <ion-row>
+        <ion-button href="register">CADASTRE-SE</ion-button>
+      </ion-row>
+    </div>
+  </div>
+</ion-content>
