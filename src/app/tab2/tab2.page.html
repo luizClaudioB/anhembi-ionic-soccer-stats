@@ -4,21 +4,22 @@
   </div>
   <ng-template #showSupporterClub>
     <ng-container *ngIf="supportedTeamGame && changeSupporterTeam === false">
-    <ion-header collapse="condense">
+    <ion-header style="display: flex; justify-content: center; flex-direction: column;"> 
       <ion-toolbar>
             <img style="width: 80px; height: 100px; margin-left: 40%; margin-bottom: 5px"[src]="supportTeamInfo.url">
       </ion-toolbar>
-      <ion-row>
-        <ion-button 
-          (click)="changeSupporterTeam = true" 
-          style="margin-left: 2.1em; margin-top: 1em; font-weight: 100; margin-bottom: 0px; padding-bottom: 0px;"
-        >
-          Virou a casaca? Selecione um novo time!
-        </ion-button>
-      </ion-row>
     </ion-header>
 
-        <ion-card>
+    <div style="margin-top: 1em; margin-bottom: 1em; width: 100%; display: flex; justify-content: center;">
+    <ion-button 
+          (click)="changeSupporterTeam = true" 
+          style="font-weight: 200;"
+        >
+          Virou a casaca? Selecione um novo time!
+      </ion-button>
+    </div>
+
+        <ion-card style="margin-bottom: 1em">
           <ion-card-content>
             <ion-card-subtitle>
               Nome: {{supportTeamInfo.name}}
@@ -57,7 +58,7 @@
         </ion-card>
 
         <ion-slides [options]="{ slidesPerView: 'auto', zoom: false, grabCursor: true }">
-          <ion-slide style="margin-top: -1em" *ngFor="let game of supportedTeamGame">
+          <ion-slide *ngFor="let game of supportedTeamGame">
             <ion-card style="width: 100%">
               <ion-card-content>
               <ion-card-subtitle style="margin-left: -7.5em">Todas as Partidas - {{ game?.round }}</ion-card-subtitle>
