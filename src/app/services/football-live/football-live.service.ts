@@ -137,7 +137,7 @@ const arrayImgEnClubs: Array<clubsImg> = [
   },
   {
     clube: 'Wolverhampton Wanderers FC',
-    nome: 'Wolverhampton',
+    nome: 'Wolves',
     cidade: 'Wolverhampton',
     url: "https://upload.wikimedia.org/wikipedia/pt/6/6c/Wolverhampton_Wanderers.png",
     estadio: 'Molineux Stadium'
@@ -265,7 +265,7 @@ const arrayImgBrClubs: Array<clubsImg> = [
   },
   {
   clube: 'CR Vasco da Gama',
-  nome: 'Vasco da Gama',
+  nome: 'Vasco',
   cidade: 'Rio de Janeiro - RJ',
   url: "https://upload.wikimedia.org/wikipedia/pt/8/89/Club_de_Regatas_Vasco_da_Gama.png",
   estadio: 'São Januário'
