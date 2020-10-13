@@ -1,10 +1,10 @@
 <ion-list-header style="background: #F0F0F0" >
-  <div style="width: 95%; display: flex; justify-content: center;">
-  <h4 style="font-weight: 100; color: black">Partidas do Campeonato</h4>
+  <div class="headerStyle">
+  <h4 class="headerTitleStyle">Partidas do Campeonato</h4>
   </div>
 </ion-list-header>
 
-    <ion-item style="color: black; font-weight: 100; margin-right: 1.2em;">
+    <ion-item class="itemStyle">
       <ion-label>Campeonato</ion-label>
       <ion-select style="color: black" id="country" (ionChange)="getChampionshipData($event.detail.value); country = $event.detail.value" 
         value="brasil">
@@ -21,18 +21,18 @@
       <ion-slides [options]="{ slidesPerView: 'auto', zoom: false, grabCursor: true }">
         <ion-slide *ngFor="let round of eachRound; let i = index" style="width: 100%;">
           <ion-col style="background: #F0F0F0">
-            <div style="font-weight: 100; margin-bottom: -0.75em; margin-top: 1em">
+            <div class="roundStyle">
               <span style="color: black">RODADA {{i + 1}}</span>
             </div>
             <ion-card>
               <ion-card-content style="background: #F0F0F0;" *ngFor="let r of round">
                 <ion-row style="justify-content: center; align-items: center;">
                     <img [src]="r?.teamImg1" style="margin-right: 10px; width: 60px" />
-                <h2 *ngIf="r.score; else noScore" style="font-weight: 100; margin: 1.5em; font-size: 25px">
+                <h2 *ngIf="r.score; else noScore" class="scoreStyle">
                   {{ r?.score?.ft[0] }} x {{ r?.score?.ft[1] }}
                 </h2>
                 <ng-template #noScore>
-                  <h2 style="font-weight: 100; margin: 1.5em; font-size: 25px">- x -</h2>
+                  <h2 class="scoreStyle">- x -</h2>
                 </ng-template>
                   <img [src]="r?.teamImg2" style="margin-left: 10px; width: 60px"/>
                 </ion-row>

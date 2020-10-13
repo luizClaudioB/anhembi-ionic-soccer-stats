@@ -1,10 +1,10 @@
 <ion-list-header>
-  <div style="width: 95%; display: flex; justify-content: center;">
-  <h4 style="font-weight: 100; color: black">Tabela do Campeonato</h4>
+  <div class="headerStyle">
+  <h4 class="headerTitleStyle">Tabela do Campeonato</h4>
   </div>
 </ion-list-header>
 
-<ion-item style="color: black; font-weight: 100;">
+<ion-item class="headerTitleStyle">
   <ion-label>Campeonato</ion-label>
   <ion-select style="color: black" id="country" (ionChange)="initializeData($event.detail.value)" value="brasil">
     <ion-select-option value="brasil">Brasileirão</ion-select-option>
@@ -12,15 +12,14 @@
   </ion-select>
 </ion-item>
 
-<div *ngIf="isLoading === true; else showStanding" style="display: flex; align-items: center; height: 30em; justify-content: center;">
+<div *ngIf="isLoading === true; else showStanding" class="isLoading">
   <ion-spinner></ion-spinner>
 </div>
 <ng-template #showStanding>
   <ion-content *ngIf="standings != null">
     <ion-card>
     <ion-card-content>
-    <ion-grid style="color: black !important; font-weight: 100;
-      margin-left: -12px; margin-right: -18px; margin-top: -12px">
+    <ion-grid class="gridStyle">
       <ion-row>
         <ion-col style="color: green" size="4.5">
         Clube

@@ -1,0 +1,25 @@
+.isLoading {
+    display: flex; 
+    align-items: center; 
+    height: 30em; 
+    justify-content: center;
+}
+
+.headerStyle {
+    width: 95%; 
+    display: flex; 
+    justify-content: center;
+}
+
+.headerTitleStyle {
+    font-weight: 100; 
+    color: black;
+}
+
+.gridStyle {
+    color: black !important; 
+    font-weight: 100;
+    margin-left: -12px; 
+    margin-right: -18px; 
+    margin-top: -12px;
+}

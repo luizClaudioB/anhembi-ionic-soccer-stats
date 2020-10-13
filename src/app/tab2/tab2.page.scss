@@ -1,0 +1,32 @@
+.rowItemNextMatch {
+    margin-right: 10px;
+}
+
+.imgItemNextMatch {
+    width: 40px;
+}
+
+.clubsName {
+    font-weight: 100; 
+    color: black; 
+    margin-left: 0.5em;
+}
+
+.chooseSupportClub {
+    margin-left: 15px; 
+    font-weight: 100;
+}
+
+.rowClubsMatch {
+    margin-top: 10px; 
+    margin-bottom: 10px; 
+    align-items: center; 
+    justify-content: center;
+}
+
+.listClubsStyle {
+    display: flex; 
+    flex-direction: row; 
+    align-items: center; 
+    cursor: pointer;
+}
