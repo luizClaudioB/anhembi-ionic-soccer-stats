@@ -12,7 +12,7 @@ form {
 }
 
 .title {
-  font-family: "ArchivoBold";
+  //font-family: "ArchivoBold";
   margin-bottom: 5rem;
 }
 
@@ -20,4 +20,8 @@ form {
   width: 100%;
   height: 3.43rem;
   color: var(--ion-color-light);
+}
+
+.paddingInput {
+  padding-left: 0.5em !important;
 }

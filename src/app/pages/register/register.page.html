@@ -4,10 +4,10 @@
   </ion-text>
 
   <form (ngSubmit)="register()" [formGroup]="userForm">
-    <ion-input appInput placeholder="Nome completo" formControlName="name"></ion-input>
-    <ion-input appInput placeholder="E-mail" formControlName="email"></ion-input>
-    <ion-input appInput placeholder="Senha" type="password" formControlName="password"></ion-input>
-    <ion-input appInput placeholder="Confirmação de senha" type="password" formControlName="confirmPassword">
+    <ion-input class="paddingInput" appInput placeholder="Nome completo" formControlName="name"></ion-input>
+    <ion-input class="paddingInput" appInput placeholder="E-mail" formControlName="email"></ion-input>
+    <ion-input class="paddingInput" appInput placeholder="Senha" type="password" formControlName="password"></ion-input>
+    <ion-input class="paddingInput" appInput placeholder="Confirmação de senha" type="password" formControlName="confirmPassword">
     </ion-input>
     <ion-button href="login" expand="block" class="button" (click)="register()">Cadastre-se</ion-button>
   </form>

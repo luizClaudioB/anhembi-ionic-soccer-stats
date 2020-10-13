@@ -1,6 +1,12 @@
 import { Component, Injectable, OnInit, OnChanges } from '@angular/core';
 import FootballLiveService from './../services/football-live/football-live.service';
 import { MatchesModel } from '../models/matches.model'
+
+export interface teamsImg {
+  team: string,
+  img: string,
+}
+
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -12,20 +18,24 @@ export class Tab1Page implements OnInit {
 
   isLoading: boolean = false;
   matches: MatchesModel;
-  filteredMatches: any;
-  filtrarJogos: boolean = false;
+  filterMatches: boolean = false;
   country: string = 'brasil';
+  standings: Array<any> = null;
+  eachRound;
+  filteredMatches;
+  clubs;
 
   constructor(
     private footballLiveService: FootballLiveService,
   ) {}
 
   async ngOnInit(){
-    await this.initializeData()
+    await this.initializeData(this.country)
   }
 
-  async initializeData(){
-    await this.getChampionshipData(this.country);
+  async initializeData(country: string){
+    await this.getChampionshipData(country);
+    await this.getClubsFromChampionship();
   }
 
   public async getChampionshipData(country: string) {
@@ -34,9 +44,16 @@ export class Tab1Page implements OnInit {
         this.matches = result;
         this.getPastRounds();
         this.getEachRoundSeparated();
-        this.isLoading = false;
+        //this.isLoading = false;
      
     return this.matches;
+  }
+
+  public async getClubsFromChampionship() {
+    const result: any = await this.footballLiveService.getClubsFromChampionship('brasil')
+      this.clubs = result;
+
+    return this.clubs;
   }
 
   getPastRounds(){
@@ -46,10 +63,20 @@ export class Tab1Page implements OnInit {
   }
 
   getEachRoundSeparated(){
-    let rodadasSeparadas: Object;
+    let newArray = [], rodadasSeparadas;
     rodadasSeparadas = this.matches.matches.reduce((h, match) => Object.assign(h, { [match.round]:( h[match.round] || [] )
-      .concat({date: match.date, score: match.score, team1: match.team1, team2: match.team2}) }), {});
+      .concat({date: match.date, score: match.score, team1: match.team1, team2: match.team2, 
+        teamImg1: match.team1Img, teamImg2: match.team2Img}) }), [{}]);
+    
+    for(let i = 1; i <= 38; i++){
+      let str1 = i.toString();
+      let str2 = this.country === 'brasil' ? 'Rodada' : 'Matchday';
+      let concat = str2 + ' ' + str1;
+      newArray.push(rodadasSeparadas[concat])
+    }
+    this.eachRound = newArray;
+    this.isLoading = false;
 
-    return rodadasSeparadas;
+    return this.eachRound;
   }
 }

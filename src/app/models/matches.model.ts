@@ -1,4 +1,5 @@
 export interface MatchesModel {
+    name?: string,
     matches?: [
         {
             date?: string,
@@ -8,6 +9,8 @@ export interface MatchesModel {
             score?: {
                 ft?: Array<number>
             }
+            team1Img?: string,
+            team2Img?: string,
         }
     ]
 }

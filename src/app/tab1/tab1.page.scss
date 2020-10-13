@@ -6,3 +6,35 @@ ion-toggle {
     
   }
 
+.alert-wrapper {
+    background: #e5e5e5;
+}
+
+.headerStyle {
+  width: 95%; 
+  display: flex; 
+  justify-content: center;
+}
+
+.headerTitleStyle {
+  font-weight: 100; 
+  color: black;
+}
+
+.roundStyle {
+  font-weight: 100; 
+  margin-bottom: -0.75em; 
+  margin-top: 1em;
+}
+
+.scoreStyle {
+  font-weight: 100; 
+  margin: 1.5em; 
+  font-size: 25px;
+}
+
+.itemStyle {
+  color: black; 
+  font-weight: 100; 
+  margin-right: 1.2em;
+}
