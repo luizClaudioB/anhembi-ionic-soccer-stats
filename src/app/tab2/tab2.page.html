@@ -55,6 +55,22 @@
           </ion-label>
         </ion-card-content>
       </ion-card>
+      
+      <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle style="margin-right: 10px">Estatísticas da equipe</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <div style="display: flex; flex-direction: column; justify-content: center;">
+              <span *ngIf="clubStats">Vitórias: {{ clubStats?.vitorias }}</span>
+              <span *ngIf="clubStats">Empates: {{ clubStats?.empates }}</span>
+              <span *ngIf="clubStats">Derrotas: {{ clubStats?.derrotas }}</span>
+              <span *ngIf="clubStats">Gols Marcados: {{ clubStats?.golsPro }}</span>
+              <span *ngIf="clubStats">Gols Sofridos: {{ clubStats?.golsContra }}</span>
+              <span *ngIf="clubStats">Saldo de gols: {{ clubStats?.sg }}</span>
+            </div>
+          </ion-card-content>
+        </ion-card>
 
       <ion-slides [options]="{ slidesPerView: 'auto', zoom: false, grabCursor: true }">
         <ion-slide *ngFor="let game of supportedTeamGame">
@@ -80,10 +96,17 @@
     <ng-container *ngIf="changeSupporterTeam">
       <ion-content>
         <h4 class="chooseSupportClub">Escolha seu time do coração</h4>
+        <ion-item class="headerTitleStyle">
+          <ion-label>Campeonato</ion-label>
+          <ion-select style="color: black" id="country" [(ngModel)]="country" (ionChange)="getClubInformation($event.detail.value)" value="brasil">
+            <ion-select-option value="brasil">Brasileirão</ion-select-option>
+            <ion-select-option value="inglaterra">Premier League</ion-select-option>
+          </ion-select>
+        </ion-item>
         <ion-input class="searchClub" [(ngModel)]="search" value="search" (ionChange)="filterClubs()" appInput placeholder="Busque seu time"></ion-input>
         <ion-list style="margin-bottom: 10px">
           <ion-item style="height: 3em;" *ngFor="let clubs of getAllFilteredClubs">
-            <div (click)="initializeData('brasil', clubs?.name); changeSupporterTeam = false" class="listClubsStyle">
+            <div (click)="initializeData(country, clubs?.name); changeSupporterTeam = false; timeDoCoracao = clubs?.name" class="listClubsStyle">
               <img style="width: 20px" [src]="clubs?.url" />
               <ion-label>
                 <h2 class="clubsName">{{clubs.name}}</h2>
