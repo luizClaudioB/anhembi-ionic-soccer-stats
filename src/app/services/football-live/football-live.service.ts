@@ -281,7 +281,7 @@ const arrayImgBrClubs: Array<clubsImg> = [
   clube: 'Fortaleza EC',
   nome: 'Fortaleza',
   cidade: 'Fortaleza - CE',
-  url: "https://upload.wikimedia.org/wikipedia/pt/5/5e/FortalezaEC2019.png",
+  url: "https://upload.wikimedia.org/wikipedia/commons/9/9e/Escudo_do_Fortaleza_EC.png",
   estadio: 'Castelão'
   },
   {
