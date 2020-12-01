@@ -46,7 +46,10 @@
             </ion-col>
           </ion-row>
         
-          <ion-row *ngFor="let team of standings">
+          <ion-row *ngFor="let team of standings; let i = index" [ngClass]="{
+              'g4': i > 0 && i < 5 , 
+              'z4': i > (standings.length -5)
+            }">
             <ion-col style="text-overflow: ellipsis;" size="4.5">
               {{ team.team | slice:0:13 }}
             </ion-col>
