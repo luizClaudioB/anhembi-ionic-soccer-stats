@@ -15,6 +15,8 @@ export class Tab3Page implements OnInit {
   country: string = 'brasil';
   clubs: any;
   standings: Array<Object> = null;
+  bestAttackTeam: string = '';
+  numberOfGoals: number = 0;
 
   constructor(
     private footballLiveService: FootballLiveService,
@@ -50,12 +52,14 @@ export class Tab3Page implements OnInit {
   public getStandings() {
     let allMatchesClub, team, provisoryStandings: any = [{}];
     let wins: number = 0, defeats: number = 0, draw: number = 0, points: number = 0, playedGames: number = 0;
-    
+    let golsPro: number = 0;
+        
     for(let i = 0; i < this.clubs.clubs.length; i++){
       wins = 0;
       defeats = 0;
       draw = 0;
       points = 0;
+      golsPro = 0;
 
       team = this.clubs.clubs[i].name;
       allMatchesClub = this.matches.matches.filter((team) => team.team1 === this.clubs.clubs[i].name || 
@@ -63,6 +67,9 @@ export class Tab3Page implements OnInit {
         
       for(let i = 0; i < allMatchesClub.length; i++){
           if(team === allMatchesClub[i].team1 && allMatchesClub[i].score != undefined){
+            
+            golsPro = golsPro + allMatchesClub[i].score.ft[0];
+            
             allMatchesClub[i].score.ft[0] > allMatchesClub[i].score.ft[1] 
               ? (wins = wins + 1, points = points + 3) : null;
             allMatchesClub[i].score.ft[0] === allMatchesClub[i].score.ft[1]
@@ -71,6 +78,9 @@ export class Tab3Page implements OnInit {
               ? (defeats = defeats + 1) : null;
           }
           else if(team === allMatchesClub[i].team2 && allMatchesClub[i].score != undefined){
+            
+            golsPro = golsPro + allMatchesClub[i].score.ft[1];
+            
             allMatchesClub[i].score.ft[0] < allMatchesClub[i].score.ft[1] 
               ? (wins = wins + 1, points = points + 3) : null;
             allMatchesClub[i].score.ft[0] === allMatchesClub[i].score.ft[1]
@@ -83,11 +93,23 @@ export class Tab3Page implements OnInit {
       }
 
       provisoryStandings.push({team: this.clubs.clubs[i].clubName, jogos: playedGames,
-          pontos: points, vitorias: wins, empates: draw, derrotas: defeats});
+          pontos: points, vitorias: wins, empates: draw, derrotas: defeats, golsPro: golsPro});
       provisoryStandings.sort((a,b) => (a.pontos < b.pontos) ? 1 : ((b.pontos < a.pontos) ? -1 : 0)); 
     }
 
     this.standings = provisoryStandings;
+    this.bestAttack(this.standings);
     return this.standings;
   }
+  
+  public bestAttack(championshipData: any) {
+    this.bestAttackTeam = '';
+    this.numberOfGoals = 0;
+    championshipData.forEach(team => {
+      team && team.golsPro && team.golsPro > this.numberOfGoals 
+        ? (this.bestAttackTeam = team.team, this.numberOfGoals = team.golsPro, this.imgBestAttack = team.img)
+        : null
+    });
+  }
+
 }
