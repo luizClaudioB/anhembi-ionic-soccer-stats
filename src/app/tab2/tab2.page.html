@@ -80,8 +80,9 @@
     <ng-container *ngIf="changeSupporterTeam">
       <ion-content>
         <h4 class="chooseSupportClub">Escolha seu time do coração</h4>
+        <ion-input class="searchClub" [(ngModel)]="search" value="search" (ionChange)="filterClubs()" appInput placeholder="Busque seu time"></ion-input>
         <ion-list style="margin-bottom: 10px">
-          <ion-item style="height: 3em;" *ngFor="let clubs of getAllClubs">
+          <ion-item style="height: 3em;" *ngFor="let clubs of getAllFilteredClubs">
             <div (click)="initializeData('brasil', clubs?.name); changeSupporterTeam = false" class="listClubsStyle">
               <img style="width: 20px" [src]="clubs?.url" />
               <ion-label>

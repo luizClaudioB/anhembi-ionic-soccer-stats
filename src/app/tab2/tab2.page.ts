@@ -23,6 +23,8 @@ export class Tab2Page implements OnInit {
   changeSupporterTeam: boolean = false;
   country: string = 'brasil';
   getAllClubs;
+  search: string = '';
+  getAllFilteredClubs;
 
   constructor(
     private footballLiveService: FootballLiveService,
@@ -39,6 +41,8 @@ export class Tab2Page implements OnInit {
     } else {
       await this.loadTeamData();
     }
+    this.getAllFilteredClubs = this.getAllClubs;
+
   }
 
   public async loadTeamData() {
@@ -91,6 +95,13 @@ export class Tab2Page implements OnInit {
     this.clubsNextMatch = nextMatch;
     this.isLoading = false;
     return this.clubsNextMatch;
+  }
+
+
+  public filterClubs(){
+
+    this.getAllFilteredClubs = this.getAllClubs.filter((club)=>club.name.toLowerCase().includes(this.search.toLowerCase()))
+    console.log(this.search)
   }
 }
 

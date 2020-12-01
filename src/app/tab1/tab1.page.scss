@@ -21,11 +21,21 @@ ion-toggle {
   color: black;
 }
 
-.roundStyle {
-  font-weight: 100; 
-  //margin-bottom: -0.75em; 
-  margin-top: 1em;
+.roundStyle{
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.roundStyle ion-select {
+  width: fit-content;
+  font-weight: 100;
+  color: black; 
+  font-size: 20px;
+}
+
+
 
 .scoreStyle {
   font-weight: 100; 

@@ -1,17 +1,21 @@
-import { Component, Injectable, OnInit, OnChanges } from '@angular/core';
+import { Component, Injectable, OnInit, OnChanges, ɵɵstylePropInterpolate1 } from '@angular/core';
 import FootballLiveService from './../services/football-live/football-live.service';
 import { MatchesModel } from '../models/matches.model'
+
 
 export interface teamsImg {
   team: string,
   img: string,
 }
 
+
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
+
+
 
 @Injectable()
 export class Tab1Page implements OnInit {
@@ -24,11 +28,16 @@ export class Tab1Page implements OnInit {
   eachRound;
   filteredMatches;
   clubs;
+  RoundData: number= 0;
+  IndexData: number = 0;
 
+
+  
   constructor(
     private footballLiveService: FootballLiveService,
   ) {}
 
+  
   async ngOnInit(){
     await this.initializeData(this.country)
   }
@@ -79,4 +88,18 @@ export class Tab1Page implements OnInit {
 
     return this.eachRound;
   }
-}
+
+  goToSlide(slides){
+    console.log('Round:',this.RoundData + 1)
+    slides.slideTo(this.RoundData)
+  }
+
+  getIndex(slides){
+    slides.getActiveIndex().then(data => {
+      this.IndexData = data; 
+      this.RoundData =0;
+      this.RoundData = this.IndexData 
+    });
+  }
+  }
+
