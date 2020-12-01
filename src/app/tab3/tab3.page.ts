@@ -10,6 +10,8 @@ import { MatchesModel } from '../models/matches.model'
 @Injectable()
 export class Tab3Page implements OnInit {
 
+  isStanding: boolean = true;
+  isStats: boolean = false;
   isLoading: boolean = false;
   matches: MatchesModel;
   country: string = 'brasil';
@@ -19,6 +21,8 @@ export class Tab3Page implements OnInit {
   numberOfGoals: number = 0;
   bestDefenseTeam: string = '';
   numberGC: number = 100;
+  imgBestAttack: any;
+  imgBestDefense: any;
 
   constructor(
     private footballLiveService: FootballLiveService,
@@ -33,6 +37,11 @@ export class Tab3Page implements OnInit {
     await this.getChampionshipData(country);
     await this.getClubsFromChampionship(country);
     this.isLoading = false;
+  }
+  
+  public showInfo(standings: boolean, stats: boolean) {
+    this.isStanding = !this.isStanding;
+    this.isStats = !this.isStats;
   }
 
   public async getChampionshipData(country: string) {
@@ -51,7 +60,7 @@ export class Tab3Page implements OnInit {
     return this.clubs;
   }
 
-  public getStandings() {
+  public getStandings(): any {
     let allMatchesClub, team, provisoryStandings: any = [{}];
     let wins: number = 0, defeats: number = 0, draw: number = 0, points: number = 0, playedGames: number = 0;
     let golsPro: number = 0, golsContra: number = 0; 
@@ -99,7 +108,7 @@ export class Tab3Page implements OnInit {
 
       provisoryStandings.push({team: this.clubs.clubs[i].clubName, jogos: playedGames,
           pontos: points, vitorias: wins, empates: draw, derrotas: defeats, golsPro: golsPro,
-            golsContra: golsContra, sg: (golsPro - golsContra)});
+            golsContra: golsContra, sg: (golsPro - golsContra), img: this.clubs.clubs[i].url });
       provisoryStandings.sort((a,b) => (a.pontos < b.pontos) ? 1 : ((b.pontos < a.pontos) ? -1 : 0)); 
     }
 
