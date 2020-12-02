@@ -1,4 +1,4 @@
-<ion-list-header style="background: #F0F0F0">
+<ion-list-header style="background: #f0f0f0">
   <div class="headerStyle">
     <h4 class="headerTitleStyle">Partidas do Campeonato</h4>
   </div>
@@ -6,43 +6,74 @@
 
 <ion-item class="itemStyle">
   <ion-label>Campeonato</ion-label>
-  <ion-select style="color: black" id="country"
-    (ionChange)="getChampionshipData($event.detail.value); country = $event.detail.value" value="brasil">
+  <ion-select
+    style="color: black"
+    id="country"
+    (ionChange)="getChampionshipData($event.detail.value); country = $event.detail.value"
+    value="brasil"
+  >
     <ion-select-option value="brasil">Brasileirão</ion-select-option>
     <ion-select-option value="inglaterra">Premier League</ion-select-option>
   </ion-select>
-  <br>
-
+  <br />
 </ion-item>
 
 <ion-content>
-  <div *ngIf="isLoading === true; else showMatches"
-    style="display: flex; align-items: center; height: 30em; justify-content: center;">
+  <div
+    *ngIf="isLoading === true; else showMatches"
+    style="
+      display: flex;
+      align-items: center;
+      height: 30em;
+      justify-content: center;
+    "
+  >
     <ion-spinner></ion-spinner>
   </div>
   <ng-template #showMatches>
     <div class="roundStyle">
-      <ion-select (ionChange)="RoundData = $event.detail.value; goToSlide(slides)" [value]="RoundData">
-        <ion-select-option [value]="i" *ngFor="let round of eachRound; let i= index;">
+      <ion-select
+        (ionChange)="RoundData = $event.detail.value; goToSlide(slides)"
+        [value]="RoundData"
+      >
+        <ion-select-option
+          [value]="i"
+          *ngFor="let round of eachRound; let i= index;"
+        >
           RODADA {{i+1}}
         </ion-select-option>
       </ion-select>
     </div>
-    <ion-slides #slides (ionSlideDidChange)="getIndex(slides)"
-      [options]="{ slidesPerView: 'auto', zoom: false, grabCursor: true }">
-      <ion-slide *ngFor="let round of eachRound; let i = index" style="width: 100%;">
-        <ion-col style="background: #F0F0F0">
+    <ion-slides
+      #slides
+      (ionSlideDidChange)="getIndex(slides)"
+      [options]="{ slidesPerView: 'auto', zoom: false, grabCursor: true, initialSlide: nextMatch}"
+    >
+      <ion-slide
+        *ngFor="let round of eachRound; let i = index"
+        style="width: 100%"
+      >
+        <ion-col style="background: #f0f0f0">
           <ion-card>
-            <ion-card-content style="background: #F0F0F0;" *ngFor="let r of round">
-              <ion-row style="justify-content: center; align-items: center;">
-                <img [src]="r?.teamImg1" style="margin-right: 10px; width: 60px" />
+            <ion-card-content
+              style="background: #f0f0f0"
+              *ngFor="let r of round"
+            >
+              <ion-row style="justify-content: center; align-items: center">
+                <img
+                  [src]="r?.teamImg1"
+                  style="margin-right: 10px; width: 60px"
+                />
                 <h2 *ngIf="r.score; else noScore" class="scoreStyle">
                   {{ r?.score?.ft[0] }} x {{ r?.score?.ft[1] }}
                 </h2>
                 <ng-template #noScore>
                   <h2 class="scoreStyle">- x -</h2>
                 </ng-template>
-                <img [src]="r?.teamImg2" style="margin-left: 10px; width: 60px" />
+                <img
+                  [src]="r?.teamImg2"
+                  style="margin-left: 10px; width: 60px"
+                />
               </ion-row>
             </ion-card-content>
           </ion-card>
