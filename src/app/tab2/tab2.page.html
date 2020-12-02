@@ -1,19 +1,47 @@
 <ion-content>
-  <div *ngIf="isLoading === true; else showSupporterClub"
-    style="display: flex; align-items: center; height: 30em; justify-content: center;">
+  <div
+    *ngIf="isLoading === true; else showSupporterClub"
+    style="
+      display: flex;
+      align-items: center;
+      height: 30em;
+      justify-content: center;
+    "
+  >
     <ion-spinner></ion-spinner>
   </div>
   <ng-template #showSupporterClub>
     <ng-container *ngIf="supportedTeamGame && !changeSupporterTeam">
-      <ion-header style="display: flex; justify-content: center; flex-direction: column;">
+      <ion-header
+        style="display: flex; justify-content: center; flex-direction: column"
+      >
         <ion-toolbar>
-          <img style="width: 80px; height: 100px; margin-left: 40%; margin-bottom: 5px; object-fit: contain;"
-            [src]="supportTeamInfo.url">
+          <img
+            style="
+              width: 80px;
+              height: 100px;
+              margin-left: 40%;
+              margin-bottom: 5px;
+              object-fit: contain;
+            "
+            [src]="supportTeamInfo.url"
+          />
         </ion-toolbar>
       </ion-header>
 
-      <div style="margin-top: 1em; margin-bottom: 1em; width: 100%; display: flex; justify-content: center;">
-        <ion-button (click)="changeSupporterTeam = true" style="font-weight: 100; width: 22em">
+      <div
+        style="
+          margin-top: 1em;
+          margin-bottom: 1em;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+        "
+      >
+        <ion-button
+          (click)="changeSupporterTeam = true"
+          style="font-weight: 100; width: 22em"
+        >
           Selecione um novo time!
         </ion-button>
       </div>
@@ -32,42 +60,90 @@
         </ion-card-content>
       </ion-card>
 
-      <ion-card>
+      <ion-card class="card">
         <ion-card-header>
-          <ion-row style="align-items: center;">
-            <ion-card-subtitle style="margin-right: 10px">Próxima partida -</ion-card-subtitle>
-            <ion-card-subtitle>{{ clubsNextMatch.round }}</ion-card-subtitle>
+          <ion-row class="ion-align-items-center">
+            <ion-card-subtitle class="card__subtitle">
+              Próxima partida - {{ clubsNextMatch.round }} - {{
+              clubsNextMatch.date }}
+              <p class="card__winner">Quem será o vencedor?</p>
+            </ion-card-subtitle>
           </ion-row>
         </ion-card-header>
 
         <ion-card-content>
           <ion-label>
-            <ion-row style="align-items: center;">
-              <div class="rowItemNextMatch">
-                <img class="imgItemNextMatch" [src]="clubsNextMatch?.team1Img" />
+            <ion-row>
+              <div class="votation">
+                <ion-radio-group value="teams" [(ngModel)]="votedTeam">
+                  <ion-item class="votation__team" lines="none">
+                    <img
+                      class="votation__img"
+                      [src]="clubsNextMatch?.team1Img"
+                    />
+                    <label class="votation__name">
+                      {{clubsNextMatch?.team1}}
+                    </label>
+                    <ion-radio
+                      slot="end"
+                      value="teamOne"
+                      [checked]="isTeamOneChecked"
+                      [disabled]="correctMatches"
+                    ></ion-radio>
+                  </ion-item>
+
+                  <ion-item class="votation__team" lines="none">
+                    <img
+                      class="votation__img"
+                      [src]="clubsNextMatch?.team2Img"
+                    />
+                    <label class="votation__name">
+                      {{clubsNextMatch?.team2}}
+                    </label>
+                    <ion-radio
+                      slot="end"
+                      value="teamTwo"
+                      [checked]="isTeamTwoChecked"
+                      [disabled]="correctMatches"
+                    ></ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+                <ion-button
+                  class="votation__button"
+                  (click)="vote()"
+                  [disabled]="correctMatches"
+                >
+                  Votar
+                </ion-button>
+                <p class="votation__result">
+                  Você acertou o vencedor de {{ correctMatches }} partidas
+                </p>
               </div>
-              <h3 class="rowItemNextMatch">x</h3>
-              <div class="rowItemNextMatch">
-                <img class="imgItemNextMatch" [src]="clubsNextMatch?.team2Img" />
-              </div>
-              <p>{{ clubsNextMatch.date }}</p>
             </ion-row>
           </ion-label>
         </ion-card-content>
       </ion-card>
 
-      <ion-slides [options]="{ slidesPerView: 'auto', zoom: false, grabCursor: true }">
+      <ion-slides
+        [options]="{ slidesPerView: 'auto', zoom: false, grabCursor: true }"
+      >
         <ion-slide *ngFor="let game of supportedTeamGame">
           <ion-card style="width: 100%">
             <ion-card-content>
-              <ion-card-subtitle style="margin-left: -7.5em">Todas as Partidas - {{ game?.round }}</ion-card-subtitle>
-              <ion-row style="align-items: center;">
+              <ion-card-subtitle style="margin-left: -7.5em"
+                >Todas as Partidas - {{ game?.round }}</ion-card-subtitle
+              >
+              <ion-row style="align-items: center">
                 <ion-row class="rowClubsMatch">
-                  <img [src]="game?.team1Img" style="width: 40px; margin-right: 10px;" />
-                  {{game?.score?.ft[0]}}
-                  x
-                  {{game?.score?.ft[1]}}
-                  <img [src]="game?.team2Img" style="width: 40px; margin-left: 10px" />
+                  <img
+                    [src]="game?.team1Img"
+                    style="width: 40px; margin-right: 10px"
+                  />
+                  {{game?.score?.ft[0]}} x {{game?.score?.ft[1]}}
+                  <img
+                    [src]="game?.team2Img"
+                    style="width: 40px; margin-left: 10px"
+                  />
                 </ion-row>
                 <p style="padding-left: 10px">{{ game?.date }}</p>
               </ion-row>
@@ -80,10 +156,23 @@
     <ng-container *ngIf="changeSupporterTeam">
       <ion-content>
         <h4 class="chooseSupportClub">Escolha seu time do coração</h4>
-        <ion-input class="searchClub" [(ngModel)]="search" value="search" (ionChange)="filterClubs()" appInput placeholder="Busque seu time"></ion-input>
+        <ion-input
+          class="searchClub"
+          [(ngModel)]="search"
+          value="search"
+          (ionChange)="filterClubs()"
+          appInput
+          placeholder="Busque seu time"
+        ></ion-input>
         <ion-list style="margin-bottom: 10px">
-          <ion-item style="height: 3em;" *ngFor="let clubs of getAllFilteredClubs">
-            <div (click)="initializeData('brasil', clubs?.name); changeSupporterTeam = false" class="listClubsStyle">
+          <ion-item
+            style="height: 3em"
+            *ngFor="let clubs of getAllFilteredClubs"
+          >
+            <div
+              (click)="initializeData('brasil', clubs?.name); changeSupporterTeam = false"
+              class="listClubsStyle"
+            >
               <img style="width: 20px" [src]="clubs?.url" />
               <ion-label>
                 <h2 class="clubsName">{{clubs.name}}</h2>

@@ -25,6 +25,10 @@ export class Tab2Page implements OnInit {
   getAllClubs;
   search: string = '';
   getAllFilteredClubs;
+  correctMatches: number = 0;
+  teamVoted;
+  isTeamOneChecked;
+  isTeamTwoChecked;
 
   constructor(
     private footballLiveService: FootballLiveService,
@@ -34,15 +38,28 @@ export class Tab2Page implements OnInit {
   }
 
   async ngOnInit() {
-    const hasTeamDataStoraged = await this.storage.get('supportTeamInfo');
+    const hasTeamDataStored = await this.storage.get('supportTeamInfo');
 
-    if (!hasTeamDataStoraged) {
+    if (!hasTeamDataStored) {
       await this.initializeData(this.country, this.timeDoCoracao);
     } else {
       await this.loadTeamData();
     }
     this.getAllFilteredClubs = this.getAllClubs;
+  }
 
+  public async initializeVotation() {
+    const correctMatcherStored = await this.storage.get('savedVotation');
+
+    if (correctMatcherStored) {
+      this.correctMatches = correctMatcherStored.score;
+    }
+
+    if (correctMatcherStored.teamVoted === 'teamOne') {
+      this.isTeamOneChecked = true;
+    }
+
+    this.isTeamTwoChecked = false;
   }
 
   public async loadTeamData() {
@@ -97,11 +114,17 @@ export class Tab2Page implements OnInit {
     return this.clubsNextMatch;
   }
 
+  public filterClubs() {
+    this.getAllFilteredClubs = this.getAllClubs.filter((club) => club.name.toLowerCase().includes(this.search.toLowerCase()));
+  }
 
-  public filterClubs(){
+  public async vote() {
+    const savedVotation = {
+      score: ++this.correctMatches,
+      teamVoted: this.teamVoted,
+    };
 
-    this.getAllFilteredClubs = this.getAllClubs.filter((club)=>club.name.toLowerCase().includes(this.search.toLowerCase()))
-    console.log(this.search)
+    await this.storage.set('correctMatches', savedVotation);
   }
 }
 
