@@ -15,9 +15,10 @@ import { MatchesModel } from '../models/matches.model';
 export class Tab2Page implements OnInit {
 
   isLoading: boolean = false;
-  timeDoCoracao: string = 'Flamengo RJ';
+  timeDoCoracao: string = '';
   supportedTeamGame = null;
-  supportTeamInfo = '';
+  supportTeamInfo: any;
+  matches: any;
   todaysDate: string = (new Date()).toISOString().split('T')[0];
   clubsNextMatch: MatchesModel;
   changeSupporterTeam: boolean = false;
@@ -25,6 +26,7 @@ export class Tab2Page implements OnInit {
   getAllClubs;
   search: string = '';
   getAllFilteredClubs;
+  clubStats: any;
 
   constructor(
     private footballLiveService: FootballLiveService,
@@ -35,13 +37,24 @@ export class Tab2Page implements OnInit {
 
   async ngOnInit() {
     const hasTeamDataStoraged = await this.storage.get('supportTeamInfo');
-
     if (!hasTeamDataStoraged) {
       await this.initializeData(this.country, this.timeDoCoracao);
+      this.getAllFilteredClubs = this.getAllClubs;
     } else {
-      await this.loadTeamData();
+      this.loadTeamData()
+        .then(() => {
+          this.getAllFilteredClubs = this.getAllClubs;
+          this.timeDoCoracao = this.supportTeamInfo.name;
+          if(this.getAllFilteredClubs[0].country === 'Brazil') {
+            this.country = 'brasil';
+            this.getSupportedTeamData('brasil').then(() => this.getTeamStats());
+          }
+          else {
+            this.country = 'inglaterra';
+            this.getSupportedTeamData('inglaterra').then(() => this.getTeamStats())
+          };
+        })
     }
-    this.getAllFilteredClubs = this.getAllClubs;
 
   }
 
@@ -64,24 +77,78 @@ export class Tab2Page implements OnInit {
     this.isLoading = true;
     await this.getSupportedTeamData(country, supporterTeam);
     await this.getClubInformation(country, supporterTeam);
+    await this.getTeamStats();
     await this.getNextMatch();
     await this.storeTeamsData();
   }
 
-  public async getSupportedTeamData(country: string, supportedTeam: string) {
+  public async getSupportedTeamData(country: string, supportedTeam?: string) {
     const result: any = await this.footballLiveService.getChampionship(country)
-    this.supportedTeamGame = result.matches.filter((time) => time?.team1 === supportedTeam
-      || time?.team2 === supportedTeam);
+      this.matches = result;
+      if(supportedTeam != null) {
+        this.supportedTeamGame = result.matches.filter((time) => time?.team1 === supportedTeam
+        || time?.team2 === supportedTeam);
+      }
+      
     return this.supportedTeamGame;
   }
 
-  public async getClubInformation(country: string, supporterTeam) {
+  public async getClubInformation(country: string, supporterTeam?: any) {
     const result: any = await this.footballLiveService.getClubsFromChampionship(country)
-    this.supportTeamInfo = result.clubs.filter((club) => club?.name === supporterTeam);
-    this.supportTeamInfo = this.supportTeamInfo[0];
+    if(supporterTeam !== '') {
+      this.supportTeamInfo = result.clubs.filter((club) => club?.name === supporterTeam);
+      this.supportTeamInfo = this.supportTeamInfo[0];
+    }                                            
     this.getAllClubs = result.clubs;
+    this.getAllFilteredClubs = result.clubs;
     return this.supportTeamInfo;
   }
+                                                 
+  public getTeamStats(): any {
+    let allMatchesClub, team, provisoryStandings: any = {};
+    let wins: number = 0, defeats: number = 0, draw: number = 0, points: number = 0, playedGames: number = 0; 
+    let golsPro: number = 0, golsContra: number = 0; 
+
+      team = this.timeDoCoracao;
+      allMatchesClub = this.matches.matches.filter((team) => team.team1 === this.timeDoCoracao || 
+      team.team2 === this.timeDoCoracao);
+        
+      for(let i = 0; i < allMatchesClub.length; i++){
+          if(team === allMatchesClub[i].team1 && allMatchesClub[i].score != undefined){
+
+            golsPro = golsPro + allMatchesClub[i].score.ft[0];
+            golsContra = golsContra + allMatchesClub[i].score.ft[1];
+
+            allMatchesClub[i].score.ft[0] > allMatchesClub[i].score.ft[1] 
+              ? (wins = wins + 1, points = points + 3) : null;
+            allMatchesClub[i].score.ft[0] === allMatchesClub[i].score.ft[1]
+              ? (draw = draw + 1, points = points + 1) + 1 : null;
+            allMatchesClub[i].score.ft[0] < allMatchesClub[i].score.ft[1]
+              ? (defeats = defeats + 1) : null;
+          }
+          else if(team === allMatchesClub[i].team2 && allMatchesClub[i].score != undefined){
+
+            golsPro = golsPro + allMatchesClub[i].score.ft[1];
+            golsContra = golsContra + allMatchesClub[i].score.ft[0];
+
+            allMatchesClub[i].score.ft[0] < allMatchesClub[i].score.ft[1] 
+              ? (wins = wins + 1, points = points + 3) : null;
+            allMatchesClub[i].score.ft[0] === allMatchesClub[i].score.ft[1]
+              ? (draw = draw + 1, points = points + 1) + 1 : null;
+            allMatchesClub[i].score.ft[0] > allMatchesClub[i].score.ft[1]
+              ? (defeats = defeats + 1) : null;
+          }
+
+          playedGames = wins + draw + defeats;
+      }
+
+      provisoryStandings = { team: team, jogos: playedGames,
+          pontos: points, vitorias: wins, empates: draw, derrotas: defeats, golsPro: golsPro, 
+          golsContra: golsContra, sg: (golsPro - golsContra)};
+    
+    this.clubStats = provisoryStandings;
+    return this.clubStats;
+  }  
 
   public getNextMatch() {
     let nextMatch = null;
@@ -99,9 +166,7 @@ export class Tab2Page implements OnInit {
 
 
   public filterClubs(){
-
-    this.getAllFilteredClubs = this.getAllClubs.filter((club)=>club.name.toLowerCase().includes(this.search.toLowerCase()))
-    console.log(this.search)
+    this.getAllFilteredClubs = this.getAllClubs.filter((club)=>club.name.toLowerCase().includes(this.search.toLowerCase()));
   }
 }
 
